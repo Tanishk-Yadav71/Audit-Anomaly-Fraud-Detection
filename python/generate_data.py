@@ -19,6 +19,7 @@ Output: data/gl_transactions.csv
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
+from pathlib import Path
 
 RNG = np.random.default_rng(42)
 N_NORMAL = 14000          # normal, "clean" transactions
@@ -190,7 +191,8 @@ def format_inr(n):
 
 if __name__ == "__main__":
     df = build_rows()
-    out_path = "/home/claude/audit_project/data/gl_transactions.csv"
+    out_path = Path(__file__).resolve().parents[1] / "data" / "gl_transactions.csv"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(out_path, index=False)
     print(f"Generated {len(df):,} transactions -> {out_path}")
     print("\nAnomaly breakdown:")
